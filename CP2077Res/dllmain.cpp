@@ -18,11 +18,11 @@ bool g_shutdown = false;
 
 MH_STATUS status;
 
-typedef __int64(__fastcall* tUpdateRes)(__int64);
+typedef char(__fastcall* tUpdateRes)(__int64, __int64);
 
 tUpdateRes oUpdateRes = nullptr;
 
-__int64 __fastcall hUpdateRes(__int64 a1) {
+char __fastcall hUpdateRes(__int64 a1, __int64 a2) {
 
     __int64* resolutionX = (__int64*)((__int64)(a1 + 0x78));
     __int64* resolutionY = (__int64*)((__int64)(a1 + 0x7c));
@@ -36,7 +36,7 @@ __int64 __fastcall hUpdateRes(__int64 a1) {
         *resolutionY = gameWindow.bottom;
     }
 
-    return oUpdateRes(a1);
+    return oUpdateRes(a1, a2);
 }
 
 void Hook() {
@@ -45,7 +45,7 @@ void Hook() {
     if (status != MH_OK)
         printf("Failed to initialize MinHook, MH_STATUS 0x%X\n", status);
 
-    __int64 UpdateRes = (__int64)g_gameHandle + 0x283FBC0;
+    __int64 UpdateRes = (__int64)g_gameHandle + 0x6562B8;
     MH_CreateHook((LPVOID)(UpdateRes), (LPVOID)(hUpdateRes), (LPVOID*)(&oUpdateRes));
     MH_EnableHook((LPVOID)(UpdateRes));
 
@@ -106,4 +106,3 @@ DWORD WINAPI DllMain(_In_ HINSTANCE hInstance, _In_ DWORD fdwReason, _In_ LPVOID
 
     return 1;
 }
-
