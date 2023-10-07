@@ -45,7 +45,7 @@ void Hook() {
     if (status != MH_OK)
         printf("Failed to initialize MinHook, MH_STATUS 0x%X\n", status);
 
-    __int64 UpdateRes = (__int64)g_gameHandle + 0x6562B8;
+    __int64 UpdateRes = (__int64)g_gameHandle + 0x5EF2F8;
     MH_CreateHook((LPVOID)(UpdateRes), (LPVOID)(hUpdateRes), (LPVOID*)(&oUpdateRes));
     MH_EnableHook((LPVOID)(UpdateRes));
 
